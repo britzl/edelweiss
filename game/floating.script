@@ -1,0 +1,6 @@
+go.property("direction", vmath.vector3())
+go.property("duration", 3)
+
+function init(self)
+	go.animate(".", "position", go.PLAYBACK_LOOP_PINGPONG, go.get_position() + self.direction, go.EASING_INOUTQUAD, self.duration)
+end

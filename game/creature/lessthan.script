@@ -1,0 +1,9 @@
+function init(self)
+	go.animate("lefteye", "position.y", go.PLAYBACK_LOOP_PINGPONG, go.get_position("lefteye").y + 4, go.EASING_INOUTQUAD, 2)
+	go.animate("righteye", "position.y", go.PLAYBACK_LOOP_PINGPONG, go.get_position("righteye").y + 3, go.EASING_INOUTQUAD, 2, 0.1)
+
+	go.animate("top", "euler.z", go.PLAYBACK_LOOP_PINGPONG, 4, go.EASING_INOUTQUAD, 2)
+	go.animate("bottom", "euler.z", go.PLAYBACK_LOOP_PINGPONG, -4, go.EASING_INOUTQUAD, 2)
+		
+	go.animate(".", "position.y", go.PLAYBACK_LOOP_PINGPONG, go.get_position().y + 3, go.EASING_INOUTQUAD, 2, 0)
+end

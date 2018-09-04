@@ -1,0 +1,72 @@
+images {
+  image: "/assets/images/platform1.png"
+}
+images {
+  image: "/assets/images/platform2.png"
+}
+images {
+  image: "/assets/images/plant1.png"
+}
+images {
+  image: "/assets/images/plant2.png"
+}
+images {
+  image: "/assets/images/stone1.png"
+}
+images {
+  image: "/assets/images/stone2.png"
+}
+images {
+  image: "/assets/images/lessthan_body_bottom.png"
+}
+images {
+  image: "/assets/images/lessthan_body_top.png"
+}
+images {
+  image: "/assets/images/lessthan_left_eye.png"
+}
+images {
+  image: "/assets/images/lessthan_right_eye.png"
+}
+images {
+  image: "/assets/images/plant3.png"
+}
+animations {
+  id: "player_fly"
+  images {
+    image: "/assets/images/player1.png"
+  }
+  images {
+    image: "/assets/images/player2.png"
+  }
+  images {
+    image: "/assets/images/player3.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 30
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "player_idle"
+  images {
+    image: "/assets/images/player1.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 60
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+animations {
+  id: "player_fall"
+  images {
+    image: "/assets/images/player1.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 60
+  flip_horizontal: 0
+  flip_vertical: 0
+}
+margin: 0
+extrude_borders: 2
+inner_padding: 0

@@ -1,0 +1,94 @@
+local platypus = require "platypus.platypus"
+local input = require "in.state"
+local mapper = require "in.mapper"
+local animator = require "utils.animator"
+
+local LEFT = hash("left")
+local RIGHT = hash("right")
+local FLY = hash("fly")
+local DIVE = hash("dive")
+
+local DEBUG = hash("debug")
+
+local ANIM_FLY = hash("fly")
+local ANIM_IDLE = hash("idle")
+local ANIM_FALL = hash("fall")
+
+function init(self)
+	self.platypus = platypus.create({
+		collisions = {
+			ground = { hash("ground") },
+			top = 10,
+			bottom = 10,
+			left = 10,
+			right = 8,
+			separation = platypus.SEPARATION_SHAPES,
+		},
+		gravity = -400,
+		max_velocity = 300,
+	})
+
+	self.animator = animator.create("#sprite", {
+		[ANIM_FLY] = hash("player_fly"),
+		[ANIM_IDLE] = hash("player_idle"),
+		[ANIM_FALL] = hash("player_fall")
+	})
+	input.acquire()
+	mapper.bind(mapper.KEY_1, DEBUG)
+	mapper.bind(mapper.KEY_LEFT, LEFT)
+	mapper.bind(mapper.KEY_RIGHT, RIGHT)
+	mapper.bind(mapper.KEY_SPACE, FLY)
+	mapper.bind(mapper.KEY_DOWN, DIVE)
+
+	self.animator.play_now(ANIM_IDLE)
+end
+
+function final(self)
+	-- Add finalization code here
+	-- Remove this function if not needed
+end
+
+function update(self, dt)
+
+	if input.is_pressed(LEFT) then
+		self.platypus.left(100)
+		sprite.set_hflip("#sprite", false)
+	elseif input.is_pressed(RIGHT) then
+		self.platypus.right(100)
+		sprite.set_hflip("#sprite", true)
+	end
+
+	if self.platypus.has_ground_contact() then
+		self.animator.play_now(ANIM_IDLE)
+	elseif self.platypus.is_falling() then
+		self.animator.play_now(ANIM_FALL)
+	else
+		self.animator.play_now(ANIM_FLY)
+	end
+		
+	self.platypus.update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+	self.platypus.on_message(message_id, message)
+end
+
+function on_input(self, action_id, action)
+	action_id = mapper.on_input(action_id)
+	input.on_input(action_id, action)
+	if action_id == FLY then
+		if action.pressed then
+			self.platypus.force_jump(150)
+		elseif action.released then
+			self.platypus.abort_jump(0.75)
+		end
+	elseif action_id == DEBUG and action.released then
+		msg.post("@system:", "toggle_physics_debug")
+		self.platypus.debug = not self.platypus.debug
+	end
+end
+
+function on_reload(self)
+	-- Add reload-handling code here
+	-- Remove this function if not needed
+end
